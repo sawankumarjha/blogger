@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Blogger Website</title>
+        <style>
+            * {
+                padding: 0px;
+                margin: 0px;
+                box-sizing: border-box;
+
+            }
+
+            i {
+                cursor: pointer;
+            }
+
+            header {
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 80%, white), url('header5.jpeg');
+                background-size: 100% 100%;
+                width: 100%;
+                height: 70vh;
+            }
+
+            .navigation {
+                display: flex;
+                position: fixed;
+                top: 0px;
+                content: "";
+                align-items: center;
+                width: 100%;
+                z-index: 1;
+                padding: 0px 10px;
+                height: 5vh;
+            }
+
+            .navigation div {
+                width: 50%;
+                padding: 0px 20px;
+            }
+
+            .navigation div i {
+                color: white;
+            }
+
+            #navRight {
+                display: flex;
+                align-items: center;
+                flex-direction: row-reverse;
+            }
+
+
+
+            #search {
+                width: 400px;
+                padding: 2px 7px;
+                color: white;
+                outline: none;
+                border: none;
+                margin: 0px 20px;
+                background-color: rgba(0, 0, 0, 0.5);
+                border-bottom: 2px solid white;
+                font-size: 15px;
+
+                display: none;
+            }
+
+            #search::placeholder {
+                color: white;
+            }
+
+            .mainHeader {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                color: white;
+                height: 50vh;
+            }
+
+            .mainHeader h1 {
+                text-align: center;
+                font-size: 4rem;
+                text-shadow: 2px 2px 2px black;
+            }
+
+            .mainHeader a {
+                color: white;
+                text-decoration: none;
+                border-bottom: 4px solid white;
+                font-weight: bold;
+                margin-top: 50px;
+                font-size: 20px;
+            }
+
+
+
+            .blog {
+                width: 70%;
+                margin: 10px auto;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0px 10px 10px -6px gray;
+            }
+
+            .blogHeading {
+                padding: 10px;
+            }
+
+            #share {
+                color: teal;
+                margin: 0px 10px;
+            }
+
+            .blogParagraph {
+                padding: 10px;
+
+            }
+
+            .blogParagraph p {
+                margin-bottom: 10px;
+            }
+
+            .blogImgDiv {
+                width: 100%;
+                height: 300px;
+                margin: 10px 0px;
+                overflow: hidden;
+
+
+            }
+
+            .blog:hover img {
+
+                transition: all;
+                transition-delay: 0.4s;
+                transition-duration: 0.4s;
+                transition-timing-function: linear;
+
+                transform: scale(1.1, 1.1);
+            }
+
+            .blogImgDiv img {
+                width: 100%;
+                height: 100%;
+            }
+
+            #comment {
+                color: teal;
+            }
+
+            .read,
+            .readLess {
+                float: right;
+                border: none;
+                background: transparent;
+                color: teal;
+                font-weight: bold;
+                cursor: pointer;
+                outline: none;
+            }
+
+            .read:hover,
+            .readLess {
+                color: gray;
+            }
+
+            .readLess {
+                display: none;
+            }
+
+            footer {
+                text-align: center;
+                padding: 10px;
+                color: black;
+            }
+
+            .aside {
+                position: fixed;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                text-transform: capitalize;
+                top: 0px;
+                content: "";
+                height: 100%;
+                width: 20%;
+                z-index: 1;
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0px 0px 2px 2px gray;
+                display: none;
+            }
+
+            .aside h2 {
+                margin: 10px 0px;
+            }
+
+            .aside p {
+                margin: 10px 0px;
+            }
+
+            .aside img {
+                width: 100px;
+                border-radius: 50%;
+
+            }
+
+            .aside ul {
+                text-align: left;
+            }
+
+            .aside ul li {
+                list-style: none;
+                margin: 10px 0px;
+                font-weight: bold;
+                box-shadow: 0px 0px 2px 2px lightgray;
+                padding: 5px;
+
+            }
+
+            .aside ul li a {
+                text-decoration: none;
+                color: black;
+            }
+
+            #close {
+                position: absolute;
+                top: 10px;
+                margin-left: 120px;
+                color: red;
+            }
+
+            .iPara {
+                display: none;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+
+        <header>
+            <nav class="navigation" id="nav">
+                <div id="navLeft">
+                    <i class="fa fa-bars" aria-hidden="true" id="bar"></i>
+                </div>
+                <div id="navRight">
+                    <input type="text" name="search" id="search" placeholder="Search......">
+                    <i class="fa fa-search" aria-hidden="true" id="searchIcon"></i>
+
+                </div>
+            </nav>
+            <div class="mainHeader">
+                <h1>Welcome to Our Blogger</h1>
+                <a>Home</a>
+            </div>
+            <div class="blog">
+                <div class="blogHeading">
+                    <h1>Difference Between Progrmming Language and Scripting Language</h1>
+                    <span>August 16, 2019</span>
+                    <i class="fa fa-share-alt" aria-hidden="true" id="share"></i>
+                </div>
+                <div class="blogParagraph">
+                    <p id="para1">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, sequi! Architecto commodi
+                        laboriosam velit quos expedita veritatis dolore repellendus ad aspernatur aut, ipsa laudantium
+                        itaque quam reiciendis molestias, voluptatum fugit.
+                    <p id="hidePara1" class="iPara">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum repudiandae amet molestias
+                        magnam voluptatum recusandae nisi, facilis saepe minima, iusto expedita, voluptatem
+                        reprehenderit id. Tenetur, iure perspiciatis quam incidunt non reprehenderit earum sapiente
+                        quaerat deleniti optio mollitia dolorum officia dolores minus consequuntur odit aliquam
+                        doloribus accusantium porro ipsam quos necessitatibus doloremque eos maxime! Ullam
+                        reprehenderit totam recusandae delectus adipisci dolorem id quis doloremque excepturi illo,
+                        culpa vero. Corporis, voluptates magni. Delectus officia ab, recusandae accusamus qui neque
+                        corporis non eius laborum quasi doloremque quos ad itaque voluptas dolor unde est laudantium
+                        cumque expedita incidunt ullam eligendi dolore fugiat. Perferendis, rerum.
+                    </p>
+                    </p>
+
+                    <i class="fa fa-comments" aria-hidden="true" id="comment"></i>
+                    <span>Post a Comment</span>
+                    <button id="read1" class="read">READ MORE</button>
+                    <button id="readLess1" class="readLess">READ LESS</button>
+
+                </div>
+            </div>
+            <div class="blog">
+                <div class="blogHeading">
+                    <h1>Difference Between Progrmming Language and Scripting Language</h1>
+                    <span>August 16, 2019</span>
+                    <i class="fa fa-share-alt" aria-hidden="true" id="share"></i>
+                </div>
+                <div class="blogParagraph">
+                    <div class="blogImgDiv">
+                        <img src="header1.jpeg" alt="Not Found">
+                    </div>
+                    <p id="para2">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, sequi! Architecto commodi
+                        laboriosam velit quos expedita veritatis dolore repellendus ad aspernatur aut, ipsa laudantium
+                        itaque quam reiciendis molestias, voluptatum fugit.
+                    <p id="hidePara2" class="iPara">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum repudiandae amet molestias
+                        magnam voluptatum recusandae nisi, facilis saepe minima, iusto expedita, voluptatem
+                        reprehenderit id. Tenetur, iure perspiciatis quam incidunt non reprehenderit earum sapiente
+                        quaerat deleniti optio mollitia dolorum officia dolores minus consequuntur odit aliquam
+                        doloribus accusantium porro ipsam quos necessitatibus doloremque eos maxime! Ullam
+                        reprehenderit totam recusandae delectus adipisci dolorem id quis doloremque excepturi illo,
+                        culpa vero. Corporis, voluptates magni. Delectus officia ab, recusandae accusamus qui neque
+                        corporis non eius laborum quasi doloremque quos ad itaque voluptas dolor unde est laudantium
+                        cumque expedita incidunt ullam eligendi dolore fugiat. Perferendis, rerum.
+                    </p>
+                    </p>
+
+                    <i class="fa fa-comments" aria-hidden="true" id="comment"></i>
+                    <span>Post a Comment</span>
+                    <button id="read2" class="read">READ MORE</button>
+                    <button id="readLess2" class="readLess">READ LESS</button>
+
+                </div>
+            </div>
+            <div class="blog">
+                <div class="blogHeading">
+                    <h1>Difference Between Progrmming Language and Scripting Language</h1>
+                    <span>August 16, 2019</span>
+                    <i class="fa fa-share-alt" aria-hidden="true" id="share"></i>
+                </div>
+                <div class="blogParagraph">
+                    <p id="para3">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, sequi! Architecto commodi
+                        laboriosam velit quos expedita veritatis dolore repellendus ad aspernatur aut, ipsa laudantium
+                        itaque quam reiciendis molestias, voluptatum fugit.
+                    <p id="hidePara3" class="iPara">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum repudiandae amet molestias
+                        magnam voluptatum recusandae nisi, facilis saepe minima, iusto expedita, voluptatem
+                        reprehenderit id. Tenetur, iure perspiciatis quam incidunt non reprehenderit earum sapiente
+                        quaerat deleniti optio mollitia dolorum officia dolores minus consequuntur odit aliquam
+                        doloribus accusantium porro ipsam quos necessitatibus doloremque eos maxime! Ullam
+                        reprehenderit totam recusandae delectus adipisci dolorem id quis doloremque excepturi illo,
+                        culpa vero. Corporis, voluptates magni. Delectus officia ab, recusandae accusamus qui neque
+                        corporis non eius laborum quasi doloremque quos ad itaque voluptas dolor unde est laudantium
+                        cumque expedita incidunt ullam eligendi dolore fugiat. Perferendis, rerum.
+                    </p>
+                    </p>
+
+                    <i class="fa fa-comments" aria-hidden="true" id="comment"></i>
+                    <span>Post a Comment</span>
+                    <button id="read3" class="read">READ MORE</button>
+                    <button id="readLess3" class="readLess">READ LESS</button>
+
+                </div>
+            </div>
+            <div class="blog">
+                <div class="blogHeading">
+                    <h1>Difference Between Progrmming Language and Scripting Language</h1>
+                    <span>August 16, 2019</span>
+                    <i class="fa fa-share-alt" aria-hidden="true" id="share"></i>
+                </div>
+                <div class="blogParagraph">
+                    <div class="blogImgDiv">
+                        <img src="header1.jpeg" alt="Not Found">
+                    </div>
+                    <p id="para4">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, sequi! Architecto commodi
+                        laboriosam velit quos expedita veritatis dolore repellendus ad aspernatur aut, ipsa laudantium
+                        itaque quam reiciendis molestias, voluptatum fugit.
+                    <p id="hidePara4" class="iPara">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum repudiandae amet molestias
+                        magnam voluptatum recusandae nisi, facilis saepe minima, iusto expedita, voluptatem
+                        reprehenderit id. Tenetur, iure perspiciatis quam incidunt non reprehenderit earum sapiente
+                        quaerat deleniti optio mollitia dolorum officia dolores minus consequuntur odit aliquam
+                        doloribus accusantium porro ipsam quos necessitatibus doloremque eos maxime! Ullam
+                        reprehenderit totam recusandae delectus adipisci dolorem id quis doloremque excepturi illo,
+                        culpa vero. Corporis, voluptates magni. Delectus officia ab, recusandae accusamus qui neque
+                        corporis non eius laborum quasi doloremque quos ad itaque voluptas dolor unde est laudantium
+                        cumque expedita incidunt ullam eligendi dolore fugiat. Perferendis, rerum.
+                    </p>
+                    </p>
+
+                    <i class="fa fa-comments" aria-hidden="true" id="comment"></i>
+                    <span>Post a Comment</span>
+                    <button id="read4" class="read">READ MORE</button>
+                    <button id="readLess4" class="readLess">READ LESS</button>
+
+                </div>
+            </div>
+
+            <!-- **************************Aside Section******************************* -->
+            <section class="aside" id="side">
+                <i class="fa fa-close" aria-hidden="true" id="close"></i>
+                <div class="sideImg">
+                    <img src="sawan.jpg" alt="Not Found">
+                    <h2>Sawan Kumar Jha</h2>
+                    <p>
+                        Hello friends this is Sawan Kumar Jha from Bihar but Nowdays i live in Greater Noida and I
+                        passed out class 10<sup>th</sup> with 71% from CBSE Board and Currently I am pursing diploma in
+                        Computer Science from Galgotias University and apart from this I am also a web Developer and
+                        Recently I am working on E-learning Acadmeic Project as a Frontend Developer and apart from
+                        Acadmeic Project I am working on Foody Project.
+
+                    </p>
+
+                    <ul>
+                        <li><a href="">Followers</a></li>
+                        <li><a href="">Labels</a></li>
+                        <li><a href="">Archive</a></li>
+                    </ul>
+                </div>
+            </section>
+            <!-- **************************Footer******************************* -->
+
+            <footer>
+                <h2>@Designed By skDevelopment</h2>
+            </footer>
+
+        </header>
+        <script>
+
+
+
+
+
+
+
+            $(document).ready(function () {
+                $('#searchIcon').click(() => {
+
+                    $('#search').toggle(1000);
+                })
+                $('#bar').click(() => {
+
+                    $('#side').fadeIn(500);
+                })
+                $('#close').click(() => {
+
+                    $('#side').fadeOut(500);
+                })
+                $('#read1').click(() => {
+                    $('#hidePara1').slideDown(500);
+                    $('#read1').css('display', 'none');
+                    $('#readLess1').css('display', 'block');
+                });
+                $('#readLess1').click(() => {
+                    $('#hidePara1').slideUp(500);
+                    $('#read1').css('display', 'block');
+                    $('#readLess1').css('display', 'none');
+                });
+                $('#read2').click(() => {
+                    $('#hidePara2').slideDown(500);
+                    $('#read2').css('display', 'none');
+                    $('#readLess2').css('display', 'block');
+                });
+                $('#readLess2').click(() => {
+                    $('#hidePara2').slideUp(500);
+                    $('#read2').css('display', 'block');
+                    $('#readLess2').css('display', 'none');
+                });
+                $('#read3').click(() => {
+                    $('#hidePara3').slideDown(500);
+                    $('#read3').css('display', 'none');
+                    $('#readLess3').css('display', 'block');
+                });
+                $('#readLess3').click(() => {
+                    $('#hidePara3').slideUp(500);
+                    $('#read3').css('display', 'block');
+                    $('#readLess3').css('display', 'none');
+                });
+                $('#read4').click(() => {
+                    $('#hidePara4').slideDown(500);
+                    $('#read4').css('display', 'none');
+                    $('#readLess4').css('display', 'block');
+                });
+                $('#readLess4').click(() => {
+                    $('#hidePara4').slideUp(500);
+                    $('#read4').css('display', 'block');
+                    $('#readLess4').css('display', 'none');
+                });
+
+
+            });
+            setInterval(() => {
+                let nav = document.getElementById('nav');
+                let bar = document.getElementById('bar');
+                let searchIcon = document.getElementById('searchIcon');
+                if (scrollY > 0) {
+                    nav.style.backgroundColor = 'white';
+                    bar.style.color = "black";
+                    searchIcon.style.color = "black";
+                    nav.style.boxShadow = "0px 10px 10px -6px lightgray";
+                } else {
+
+                    bar.style.color = "white";
+                    searchIcon.style.color = "white";
+                    nav.style.backgroundColor = 'transparent';
+                    nav.style.boxShadow = "none";
+                }
+            }, 0);
+
+
+
+        </script>
+    </body>
+
+</html>
